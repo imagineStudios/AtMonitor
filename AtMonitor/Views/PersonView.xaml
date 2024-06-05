@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:AtMonitor.ViewModels"
+             x:Class="AtMonitor.Views.PersonView"
+             x:DataType="vm:PersonViewModel" Padding="4">
+    <Frame HeightRequest="120" WidthRequest="120" BackgroundColor="AliceBlue" BorderColor="Transparent" Padding="4">
+        <VerticalStackLayout VerticalOptions="Center">
+            <Label Text="{Binding LastName}" HorizontalOptions="Center" FontSize="Large" FontAttributes="Bold"/>
+            <Label Text="{Binding FirstName}" HorizontalOptions="Center" FontSize="Large" FontAttributes="Bold"/>
+        </VerticalStackLayout>
+    </Frame>
+</ContentView>

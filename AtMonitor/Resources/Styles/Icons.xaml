@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:local="clr-namespace:AtMonitor"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <FontImage FontFamily="FontAwesome6" Size="24" Glyph="&#xf05a;" Color="{StaticResource Primary}" x:Key="AboutLight" />
+    <FontImage FontFamily="FontAwesome6" Size="24" Glyph="&#xf1e2;" Color="{StaticResource Primary}" x:Key="BombLight"/>
+    <FontImage FontFamily="FontAwesome6" Size="24" Glyph="&#xf5dc;" Color="{StaticResource Primary}" x:Key="BrainLight"/>
+    <FontImage FontFamily="FontAwesome6" Size="24" Glyph="&#xf5e1;" Color="{StaticResource Primary}" x:Key="CarCrashLight"/>
+    <FontImage FontFamily="FontAwesome6" Size="24" Glyph="&#xe473;" Color="{StaticResource Primary}" x:Key="ChartLight"/>
+    <FontImage FontFamily="FontAwesome6" Size="24" Glyph="&#xf7e4;" Color="{StaticResource Primary}" x:Key="FireLight"/>
+    <FontImage FontFamily="FontAwesome6" Size="24" Glyph="&#xe0e4;" Color="{StaticResource Primary}" x:Key="GanttLight"/>
+    <FontImage FontFamily="FontAwesome6" Size="24" Glyph="&#xf013;" Color="{StaticResource Primary}" x:Key="GearLight" />
+    <FontImage FontFamily="FontAwesome6" Size="24" Glyph="&#xe4e3;" Color="{StaticResource Primary}" x:Key="QuestionaireLight"/>
+
+    <FontImage FontFamily="FontAwesome6" Size="24" Glyph="&#xf05a;" Color="{StaticResource PrimaryDark}" x:Key="AboutDark"/>
+    <FontImage FontFamily="FontAwesome6" Size="24" Glyph="&#xf1e2;" Color="{StaticResource PrimaryDark}" x:Key="BombDark"/>
+    <FontImage FontFamily="FontAwesome6" Size="24" Glyph="&#xf5dc;" Color="{StaticResource PrimaryDark}" x:Key="BrainDark"/>
+    <FontImage FontFamily="FontAwesome6" Size="24" Glyph="&#xf5e1;" Color="{StaticResource PrimaryDark}" x:Key="CarCrashDark"/>
+    <FontImage FontFamily="FontAwesome6" Size="24" Glyph="&#xe473;" Color="{StaticResource PrimaryDark}" x:Key="ChartDark"/>
+    <FontImage FontFamily="FontAwesome6" Size="24" Glyph="&#xf7e4;" Color="{StaticResource PrimaryDark}" x:Key="FireDark"/>
+    <FontImage FontFamily="FontAwesome6" Size="24" Glyph="&#xe0e4;" Color="{StaticResource PrimaryDark}" x:Key="GanttDark"/>
+    <FontImage FontFamily="FontAwesome6" Size="24" Glyph="&#xf013;" Color="{StaticResource PrimaryDark}" x:Key="GearDark" />
+    <FontImage FontFamily="FontAwesome6" Size="24" Glyph="&#xe4e3;" Color="{StaticResource PrimaryDark}" x:Key="QuestionaireDark"/>
+
+    <FontImage FontFamily="FontAwesome6" Size="24" Glyph="&#xf5a2;" Color="#e1cb93" x:Key="MedalGold"/>
+    <FontImage FontFamily="FontAwesome6" Size="24" Glyph="&#xf5a2;" Color="#bbbbbb" x:Key="MedalSilver"/>
+    <FontImage FontFamily="FontAwesome6" Size="24" Glyph="&#xf5a2;" Color="#BF8970" x:Key="MedalBronze"/>
+</ResourceDictionary>
