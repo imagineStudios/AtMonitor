@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:AtMonitor.Views"
+             xmlns:vm="clr-namespace:AtMonitor.ViewModels"
+             x:DataType="vm:MainPageViewModel"
+             x:Class="AtMonitor.Views.MainPage">
+
+    <VerticalStackLayout Spacing="10">
+        <Button Text="Neuer Einsatz" HorizontalOptions="Center" HeightRequest="200" WidthRequest="300" Clicked="NewMissionButton_Clicked"/>
+        <Button Text="Berichte" HorizontalOptions="Center" HeightRequest="100" WidthRequest="300" Clicked="ReportsButton_Clicked"/>
+    </VerticalStackLayout>
+
+</ContentPage>

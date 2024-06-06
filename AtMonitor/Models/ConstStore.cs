@@ -2,12 +2,12 @@
 
 public class ConstStore<T> : IStore<T>
 {
-    private readonly T[] values;
+    private readonly T[] _values;
 
     public ConstStore(IEnumerable<T> values)
     {
-        this.values = values.ToArray();
+        _values = values.ToArray();
     }
 
-    public IEnumerable<T> GetAll() => values;
+    public IEnumerable<T> GetAll() => _values;
 }

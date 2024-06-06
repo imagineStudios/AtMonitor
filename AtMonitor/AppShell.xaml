@@ -9,7 +9,6 @@
     <ShellContent
         FlyoutIcon="{StaticResource CarCrashLight}"
         Title="Überwachung"
-        ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
     <ShellContent
         Title="Über"
