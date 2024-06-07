@@ -6,4 +6,10 @@ public partial class MissionPage : ContentPage
 	{
 		InitializeComponent();
 	}
+
+    private void AddUnitButton_Clicked(object sender, EventArgs e)
+    {
+        var page = Handler?.MauiContext?.Services.GetService<UnitRegistrationPage>();
+        Navigation.PushAsync(page);
+    }
 }

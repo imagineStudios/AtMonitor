@@ -1,6 +1,6 @@
 ﻿using AtMonitor.Models;
 
-namespace AtMonitor.Settings;
+namespace AtMonitor.Services;
 
 public interface ISettingsService
 {
@@ -11,4 +11,6 @@ public interface ISettingsService
     UnitNaming DefaultUnitNaming { get; set; }
 
     string ReportEmailList { get; set; }
+
+    int PressureInterval { get; set; }
 }

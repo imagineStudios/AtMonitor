@@ -1,4 +1,4 @@
-﻿using AtMonitor.Settings;
+﻿using AtMonitor.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace AtMonitor.ViewModels;

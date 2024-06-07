@@ -1,6 +1,6 @@
 ﻿using AtMonitor.Models;
 
-namespace AtMonitor.Settings;
+namespace AtMonitor.Services;
 
 public class SettingsService : ISettingsService
 {
@@ -28,11 +28,17 @@ public class SettingsService : ISettingsService
         set => Preferences.Set(nameof(BaseCallSign), value);
     }
 
-    private T GetEnum<T>(string key, T defaultValue)
+    public int PressureInterval
+    {
+        get => Preferences.Get(nameof(PressureInterval), 10);
+        set => Preferences.Set(nameof(PressureInterval), value);
+    }
+
+    private static T GetEnum<T>(string key, T defaultValue)
         where T : struct, Enum
         => Enum.Parse<T>(Preferences.Get(key, defaultValue.ToString()));
     
-    private void SetEnum<T>(string key, T value)
+    private static void SetEnum<T>(string key, T value)
         where T : struct, Enum
         => Preferences.Set(key, value.ToString());
 }

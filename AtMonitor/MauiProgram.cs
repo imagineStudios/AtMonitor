@@ -1,4 +1,5 @@
 ﻿using AtMonitor.Models;
+using AtMonitor.Services;
 using AtMonitor.ViewModels;
 using AtMonitor.Views;
 using Microsoft.Extensions.Logging;
@@ -32,6 +33,8 @@ public static class MauiProgram
     private static MauiAppBuilder RegisterServices(this MauiAppBuilder builder)
     {
         builder.Services.AddSingleton<IStore<Person>>(new ConstStore<Person>(Mock.People));
+        builder.Services.AddSingleton<IAppStateService, AppStateService>();
+        builder.Services.AddSingleton<ISettingsService, SettingsService>();
         return builder;
     }
 
@@ -50,6 +53,8 @@ public static class MauiProgram
     private static MauiAppBuilder RegisterViewModels(this MauiAppBuilder builder)
     {
         builder.Services.AddTransient<MainPageViewModel>();
+        builder.Services.AddTransient<MissionPageViewModel>();
+        builder.Services.AddTransient<UnitRegistrationViewModel>();
         return builder;
     }
 }

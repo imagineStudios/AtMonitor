@@ -1,4 +1,4 @@
-﻿namespace AtMonitor.Settings;
+﻿namespace AtMonitor.Models;
 
 public enum UnitNaming
 {

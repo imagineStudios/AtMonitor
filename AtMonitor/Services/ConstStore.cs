@@ -1,4 +1,4 @@
-﻿namespace AtMonitor.Models;
+﻿namespace AtMonitor.Services;
 
 public class ConstStore<T> : IStore<T>
 {

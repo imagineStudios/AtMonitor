@@ -11,7 +11,13 @@ public partial class App : Application
 
     protected override Window CreateWindow(IActivationState? activationState)
     {
-        MainPage = new NavigationPage(Handler.MauiContext?.Services.GetService<MainPage>());
+        var page = Handler.MauiContext?.Services.GetService<MainPage>();
+        MainPage = new NavigationPage(page)
+        {
+            BarBackground = Colors.IndianRed,
+            BarTextColor = Colors.White,
+        };
+
         return base.CreateWindow(activationState);
     }
 }
