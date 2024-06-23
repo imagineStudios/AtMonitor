@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:AtMonitor.ViewModels"
              x:Class="AtMonitor.Views.MissionPage"
+             x:DataType="vm:MissionViewModel"
              NavigationPage.HasBackButton="False"
              Title="MissionPage">
     <HorizontalStackLayout>
-        <Button Text="Trupp hinzufügen" Clicked="AddUnitButton_Clicked"/>
+        <Button Text="Trupp hinzufügen" Command="{Binding AddUnitCommand}"/>
     </HorizontalStackLayout>
 </ContentPage>

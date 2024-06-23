@@ -1,17 +1,25 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using AtMonitor.Services;
+using AtMonitor.Views;
 using CommunityToolkit.Mvvm.Input;
 
 namespace AtMonitor.ViewModels;
 
-public partial class MainPageViewModel : ObservableObject
+public partial class MainPageViewModel(IAppStateService appStateService, INavigationService navigationService)
+    : ViewModelBase
 {
-    //[RelayCommand]
-    //private Task AddTeamAsync()
-    //{
-    //    Navigarion.PushAsync(new )
-    //    return NavigationService.NavigateToAsync("Settings");
-    //}
+    private readonly IAppStateService _appStateService = appStateService;
+    private readonly INavigationService _navigationService = navigationService;
 
-    //[ObservableProperty]
-    //private string _title = "Hallo";
+    [RelayCommand]
+    private async Task NewMissionAsync()
+    {
+        if (_appStateService.StartNewMission())
+        {
+            await _navigationService.NavigateToPage<MissionPage>();
+        }
+    }
+
+    [RelayCommand]
+    private async Task ReportsAsync()
+        => await _navigationService.NavigateToPage<ReportPage>();
 }

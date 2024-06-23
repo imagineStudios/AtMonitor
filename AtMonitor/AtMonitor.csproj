@@ -78,9 +78,6 @@
 	  <MauiXaml Update="Views\MissionPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\MissionRegistrationPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	  <MauiXaml Update="Views\PeoplePickerPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

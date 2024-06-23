@@ -9,4 +9,6 @@ public interface IAppStateService
     bool StartNewMission();
 
     bool FinalizeMission();
+
+    string GetNextUnitName();
 }

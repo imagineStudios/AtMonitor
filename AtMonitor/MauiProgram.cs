@@ -35,6 +35,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<IStore<Person>>(new ConstStore<Person>(Mock.People));
         builder.Services.AddSingleton<IAppStateService, AppStateService>();
         builder.Services.AddSingleton<ISettingsService, SettingsService>();
+        builder.Services.AddSingleton<INavigationService, NavigationService>();
         return builder;
     }
 
@@ -43,7 +44,6 @@ public static class MauiProgram
         builder.Services.AddTransient<MainPage>();
         builder.Services.AddTransient<MissionFinalizationPage>();
         builder.Services.AddTransient<MissionPage>();
-        builder.Services.AddTransient<MissionRegistrationPage>();
         builder.Services.AddTransient<PeoplePickerPage>();
         builder.Services.AddTransient<ReportPage>();
         builder.Services.AddTransient<UnitRegistrationPage>();
@@ -55,6 +55,7 @@ public static class MauiProgram
         builder.Services.AddTransient<MainPageViewModel>();
         builder.Services.AddTransient<MissionPageViewModel>();
         builder.Services.AddTransient<UnitRegistrationViewModel>();
+        builder.Services.AddTransient<PeoplePickerViewModel>();
         return builder;
     }
 }
