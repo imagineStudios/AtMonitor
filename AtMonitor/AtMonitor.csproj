@@ -69,6 +69,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\UnitView.xaml.cs">
+	    <DependentUpon>UnitView.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="Resources\Styles\Icons.xaml">
 	    <Generator></Generator>
 	  </MauiXaml>
@@ -81,13 +87,13 @@
 	  <MauiXaml Update="Views\PeoplePickerPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\PersonView.xaml">
+	  <MauiXaml Update="Views\PickerView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\ReportPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\TeamView.xaml">
+	  <MauiXaml Update="Views\UnitView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\UnitRegistrationPage.xaml">

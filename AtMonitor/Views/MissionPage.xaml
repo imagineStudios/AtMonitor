@@ -2,11 +2,27 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:AtMonitor.ViewModels"
+             xmlns:v="clr-namespace:AtMonitor.Views"
              x:Class="AtMonitor.Views.MissionPage"
-             x:DataType="vm:MissionViewModel"
+             x:DataType="vm:MissionPageViewModel"
              NavigationPage.HasBackButton="False"
              Title="MissionPage">
+    <NavigationPage.TitleView>
+        <HorizontalStackLayout HorizontalOptions="FillAndExpand">
+            <Button Text="Einsatz abschließen" Command="{Binding FinalizeMissionCommand}"/>
+        </HorizontalStackLayout>
+    </NavigationPage.TitleView>
     <HorizontalStackLayout>
+        <CollectionView ItemsSource="{Binding Units}">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Horizontal"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <v:UnitView/>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
         <Button Text="Trupp hinzufügen" Command="{Binding AddUnitCommand}"/>
     </HorizontalStackLayout>
 </ContentPage>

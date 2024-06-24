@@ -1,15 +1,8 @@
 ﻿namespace AtMonitor.Models;
 
-public class Mission
+public class Mission(DateTime begin)
 {
-    public Mission()
-    {
-        Title = $"Einsatz {Begin}";
-    }
-
-    public event EventHandler<Unit>? UnitAdded;
-
-    public DateTime Begin { get; } = DateTime.Now;
+    public DateTime Begin { get; } = begin;
 
     public DateTime? End { get; set; }
 
@@ -17,11 +10,5 @@ public class Mission
 
     public string? Description { get; set; }
 
-    public List<Unit> Units { get; } = [];
-
-    public void AddUnit(Unit unit)
-    {
-        Units.Add(unit);
-        UnitAdded?.Invoke(this, unit);
-    }
+    public Unit[] Units { get; set;  } = [];
 }

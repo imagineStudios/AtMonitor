@@ -4,20 +4,14 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace AtMonitor.ViewModels;
 
-public partial class MainPageViewModel(IAppStateService appStateService, INavigationService navigationService)
-    : ViewModelBase
+public partial class MainPageViewModel(INavigationService navigationService)
+    : PageViewModel
 {
-    private readonly IAppStateService _appStateService = appStateService;
     private readonly INavigationService _navigationService = navigationService;
 
     [RelayCommand]
     private async Task NewMissionAsync()
-    {
-        if (_appStateService.StartNewMission())
-        {
-            await _navigationService.NavigateToPage<MissionPage>();
-        }
-    }
+        => await _navigationService.NavigateToPage<MissionPage>();
 
     [RelayCommand]
     private async Task ReportsAsync()

@@ -1,15 +1,8 @@
 ﻿namespace AtMonitor.Models;
 
-public record Person(string FirstName, string LastName)
+public record Person(string FirstName, string LastName) : IEquatable<Person>
 {
     public string Name => $"{FirstName} {LastName}";
-}
 
-public class History
-{
-
-}
-
-public record PressureReading(int Pressure)
-{
+    public override string ToString() => Name;
 }

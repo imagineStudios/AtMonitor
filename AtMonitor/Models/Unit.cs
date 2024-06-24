@@ -1,8 +1,8 @@
 ﻿namespace AtMonitor.Models;
 
-public class Unit(string name)
+public class Unit()
 {
-    public string Name { get; set; } = name;
+    public string Name { get; set; }
 
     public string? CallSign { get; set; }
 
@@ -10,5 +10,5 @@ public class Unit(string name)
 
     public string Location { get; set; }
 
-    public List<Person> Members { get; } = [];
+    public Person[] Members { get; set; } = [];
 }

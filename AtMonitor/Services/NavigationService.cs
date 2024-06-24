@@ -1,6 +1,7 @@
 ﻿using AtMonitor.Models;
 using AtMonitor.ViewModels;
 using AtMonitor.Views;
+using System.Collections.ObjectModel;
 
 namespace AtMonitor.Services;
 
@@ -34,8 +35,6 @@ public class NavigationService(IServiceProvider services) : INavigationService
             GetPageViewModelBase(page)?.OnNavigatingTo(parameter);
             await Navigation.PushAsync(page, true);
             page.NavigatedFrom += Page_NavigatedFrom;
-
-            await Navigation.PushAsync(page, true);
             return page;
         }
 
@@ -47,13 +46,13 @@ public class NavigationService(IServiceProvider services) : INavigationService
         return Navigation.PopAsync();
     }
 
-    public Task<Page> NavigateToPeoplePicker(Unit unit)
+    public Task<Page> NavigateToPeoplePicker(Collection<Person> people)
     {
-        return NavigateToPage<PeoplePickerPage>(unit);
+        return NavigateToPage<PeoplePickerPage>(people);
     }
 
-    private ViewModelBase? GetPageViewModelBase(Page? p)
-        => p?.BindingContext as ViewModelBase;
+    private PageViewModel? GetPageViewModelBase(Page? p)
+        => p?.BindingContext as PageViewModel;
 
     private void Page_NavigatedTo(object? sender, NavigatedToEventArgs e)
         => GetPageViewModelBase(sender as Page)?.OnNavigatedTo();

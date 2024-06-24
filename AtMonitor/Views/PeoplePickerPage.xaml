@@ -4,16 +4,15 @@
              x:Class="AtMonitor.Views.PeoplePickerPage"
              xmlns:views="clr-namespace:AtMonitor.Views"
              xmlns:vm="clr-namespace:AtMonitor.ViewModels"
-             Title="PeoplePickerPage"
-             x:DataType="vm:PeoplePickerViewModel">
+             Title="PeoplePickerPage">
     <ScrollView Orientation="Both">
-        <CollectionView ItemsSource="{Binding People}">
+        <CollectionView ItemsSource="{Binding Items}">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical" Span="5" />
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <views:PersonView/>
+                    <views:PickerView/>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>

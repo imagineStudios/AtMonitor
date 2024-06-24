@@ -2,7 +2,7 @@
 
 namespace AtMonitor.ViewModels;
 
-public class ViewModelBase : ObservableObject
+public class PageViewModel : ObservableObject
 {
     public virtual void OnNavigatingTo(object? parameter)
     {
