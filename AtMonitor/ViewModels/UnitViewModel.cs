@@ -38,7 +38,7 @@ public partial class UnitViewModel : ObservableObject
         set => SetProperty(Unit.Location, value, Unit, (u, n) => u.Location = n);
     }
 
-    public ObservableCollection<Person> Members = [];
+    public ObservableCollection<Person> Members { get; } = [];
 
     private void Members_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {

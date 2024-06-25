@@ -12,10 +12,10 @@
             <Button Text="Einsatz abschließen" Command="{Binding FinalizeMissionCommand}"/>
         </HorizontalStackLayout>
     </NavigationPage.TitleView>
-    <HorizontalStackLayout>
+    <HorizontalStackLayout HorizontalOptions="Center">
         <CollectionView ItemsSource="{Binding Units}">
             <CollectionView.ItemsLayout>
-                <LinearItemsLayout Orientation="Horizontal"/>
+                <LinearItemsLayout Orientation="Horizontal" ItemSpacing="8"/>
             </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
@@ -23,6 +23,6 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <Button Text="Trupp hinzufügen" Command="{Binding AddUnitCommand}"/>
+        <Button Text="Trupp hinzufügen" Command="{Binding AddUnitCommand}" HeightRequest="100"/>
     </HorizontalStackLayout>
 </ContentPage>

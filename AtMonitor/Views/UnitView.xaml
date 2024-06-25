@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:AtMonitor.ViewModels"
+             x:DataType="{x:Type vm:UnitViewModel}"
              x:Class="AtMonitor.Views.UnitView">
-    <Frame CornerRadius="4" BackgroundColor="#20808080">
+    <Frame CornerRadius="4" BackgroundColor="#20808080" WidthRequest="300">
         <VerticalStackLayout>
-            <Label Text="Angriffstrupp" HorizontalOptions="Center" />
+            <Label Text="{Binding Name}" HorizontalOptions="Center" FontSize="Large"/>
+            <CollectionView ItemsSource="{Binding Members}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame>
+                            <Label Text="{Binding Name}"/>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         </VerticalStackLayout>
     </Frame>
 </ContentView>

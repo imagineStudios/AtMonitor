@@ -33,7 +33,6 @@ public static class MauiProgram
     private static MauiAppBuilder RegisterServices(this MauiAppBuilder builder)
     {
         builder.Services.AddSingleton<IStore<Person>>(new ConstStore<Person>(Mock.People));
-        //builder.Services.AddSingleton<IAppStateService, AppStateService>();
         builder.Services.AddSingleton<ISettingsService, SettingsService>();
         builder.Services.AddSingleton<INavigationService, NavigationService>();
         return builder;
