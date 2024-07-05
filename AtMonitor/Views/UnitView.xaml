@@ -1,18 +1,46 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:v="clr-namespace:AtMonitor.Views"
              xmlns:vm="clr-namespace:AtMonitor.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="{x:Type vm:UnitViewModel}"
              x:Class="AtMonitor.Views.UnitView">
     <Frame CornerRadius="4" BackgroundColor="#20808080" WidthRequest="300">
         <VerticalStackLayout>
-            <Label Text="{Binding Name}" HorizontalOptions="Center" FontSize="Large"/>
+            
+            <Entry Text="{Binding Name}" HorizontalOptions="Center" FontSize="Large"/>
+
+            <Grid Margin="0,10,0,0">
+                <HorizontalStackLayout>
+                    <Image Source="{FontImage FontFamily=FontAwesome6, Glyph={x:Static v:FaIcon.UserGroup}, Size=24, Color=Black}"/>
+                    <Label Text="Truppmitglieder" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+                <Button ImageSource="{FontImage FontFamily=FontAwesome6, Glyph={x:Static v:FaIcon.UserPlus}, Size=12}"
+                        Command="{Binding PickPeopleCommand}"
+                        MinimumHeightRequest="0"
+                        MinimumWidthRequest="0"
+                        HorizontalOptions="End"
+                        Padding="8"/>
+            </Grid>
+            
             <CollectionView ItemsSource="{Binding Members}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame>
-                            <Label Text="{Binding Name}"/>
-                        </Frame>
+                        <Border Background="#20000000">
+                            <Grid>
+                                <Label Text="{Binding Name}" Margin="0" VerticalOptions="Center"/>
+                                <Button
+                                    Padding="8"
+                                    VerticalOptions="Start"
+                                    HorizontalOptions="End"
+                                    MinimumHeightRequest="0"
+                                    MinimumWidthRequest="0"
+                                    ImageSource="{FontImage FontFamily=FontAwesome6, Glyph={x:Static v:FaIcon.x}, Size=12}"
+                                    Command="{Binding BindingContext.RemoveMemberCommand, Source={RelativeSource AncestorType={x:Type CollectionView}}}"
+                                    CommandParameter="{Binding .}"/>
+                            </Grid>
+                        </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>

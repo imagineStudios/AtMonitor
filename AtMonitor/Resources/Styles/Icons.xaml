@@ -13,6 +13,7 @@
     <FontImage FontFamily="FontAwesome6" Size="24" Glyph="&#xe0e4;" Color="{StaticResource Primary}" x:Key="GanttLight"/>
     <FontImage FontFamily="FontAwesome6" Size="24" Glyph="&#xf013;" Color="{StaticResource Primary}" x:Key="GearLight" />
     <FontImage FontFamily="FontAwesome6" Size="24" Glyph="&#xe4e3;" Color="{StaticResource Primary}" x:Key="QuestionaireLight"/>
+    <FontImage FontFamily="FontAwesome6" Size="24" Glyph="&#xf11e;" Color="{StaticResource White}" x:Key="CheckerdFlag"/>
 
     <FontImage FontFamily="FontAwesome6" Size="24" Glyph="&#xf05a;" Color="{StaticResource PrimaryDark}" x:Key="AboutDark"/>
     <FontImage FontFamily="FontAwesome6" Size="24" Glyph="&#xf1e2;" Color="{StaticResource PrimaryDark}" x:Key="BombDark"/>

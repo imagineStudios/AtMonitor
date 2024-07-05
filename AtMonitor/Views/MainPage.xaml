@@ -7,9 +7,15 @@
              x:Class="AtMonitor.Views.MainPage">
 
     <VerticalStackLayout Spacing="10">
-        <Button Text="Neuer Einsatz" HorizontalOptions="Center" HeightRequest="200" WidthRequest="300"
+        <Button Text="Neuer Einsatz"
+                HorizontalOptions="Center"
+                HeightRequest="200"
+                WidthRequest="300"
                 Command="{Binding NewMissionCommand}"/>
-        <Button Text="Berichte" HorizontalOptions="Center" HeightRequest="100" WidthRequest="300" 
+        <Button Text="Berichte"
+                HorizontalOptions="Center"
+                HeightRequest="100"
+                WidthRequest="300" 
                 Command="{Binding ReportsCommand}"/>
     </VerticalStackLayout>
 

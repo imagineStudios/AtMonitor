@@ -4,7 +4,7 @@ namespace AtMonitor.Views;
 
 public partial class UnitRegistrationPage : ContentPage
 {
-    public UnitRegistrationPage(UnitRegistrationViewModel vm)
+    public UnitRegistrationPage(UnitRegistrationPageViewModel vm)
     {
         InitializeComponent();
         BindingContext = vm;

@@ -24,7 +24,7 @@ public class SettingsService : ISettingsService
 
     public string BaseCallSign
     {
-        get => Preferences.Get(nameof(BaseCallSign), string.Empty);
+        get => Preferences.Get(nameof(BaseCallSign), "Florentine Notzingen 1-40/1");
         set => Preferences.Set(nameof(BaseCallSign), value);
     }
 

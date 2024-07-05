@@ -53,7 +53,7 @@ public static class MauiProgram
     {
         builder.Services.AddTransient<MainPageViewModel>();
         builder.Services.AddTransient<MissionPageViewModel>();
-        builder.Services.AddTransient<UnitRegistrationViewModel>();
+        builder.Services.AddTransient<UnitRegistrationPageViewModel>();
         return builder;
     }
 }
