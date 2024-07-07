@@ -1,5 +1,4 @@
-﻿using AtMonitor.Models;
-using AtMonitor.ViewModels;
+﻿using AtMonitor.ViewModels;
 using AtMonitor.Views;
 using System.Collections.ObjectModel;
 
@@ -46,7 +45,7 @@ public class NavigationService(IServiceProvider services) : INavigationService
         return Navigation.PopAsync();
     }
 
-    public Task<Page> NavigateToPeoplePicker(Collection<Person> people)
+    public Task<Page> NavigateToPeoplePicker(Collection<PersonViewModel> people)
     {
         return NavigateToPage<PeoplePickerPage>(people);
     }

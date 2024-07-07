@@ -28,10 +28,15 @@ public class SettingsService : ISettingsService
         set => Preferences.Set(nameof(BaseCallSign), value);
     }
 
-    public int PressureInterval
+    public int PressureInterval_Bar
     {
-        get => Preferences.Get(nameof(PressureInterval), 10);
-        set => Preferences.Set(nameof(PressureInterval), value);
+        get => Preferences.Get(nameof(PressureInterval_Bar), 10);
+        set => Preferences.Set(nameof(PressureInterval_Bar), value);
+    }
+    public int EstimatedAirConsumptionRate_BarPerMinute
+    {
+        get => Preferences.Get(nameof(EstimatedAirConsumptionRate_BarPerMinute), 10);
+        set => Preferences.Set(nameof(EstimatedAirConsumptionRate_BarPerMinute), value);
     }
 
     private static T GetEnum<T>(string key, T defaultValue)

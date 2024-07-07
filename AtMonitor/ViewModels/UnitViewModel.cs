@@ -1,5 +1,6 @@
 ﻿using AtMonitor.Models;
 using AtMonitor.Services;
+using AtMonitor.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
@@ -51,7 +52,9 @@ public partial class UnitViewModel : ObservableObject
         set => SetProperty(Unit.Location, value, Unit, (u, n) => u.Location = n);
     }
 
-    public ObservableCollection<Person> Members { get; } = [];
+    public bool CanBeChanged { get; set; } = true;
+
+    public ObservableCollection<PersonViewModel> Members { get; } = [];
 
     [RelayCommand]
     private async Task PickPeople()
@@ -59,10 +62,15 @@ public partial class UnitViewModel : ObservableObject
 
     [RelayCommand]
     private void RemoveMember(object parameter)
-        => Members.Remove((Person)parameter);
+        => Members.Remove((PersonViewModel)parameter);
+
+    [RelayCommand]
+    private async Task AddReading()
+        => await _navigationService.NavigateToPeoplePicker(Members);
+        //=> await _navigationService.NavigateToPage<PressureReadingPage>(Members);
 
     private void Members_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {
-        Unit.Members = [.. Members];
+        Unit.Members = [.. Members.Select(pvm => pvm.Person)];
     }
 }

@@ -1,4 +1,4 @@
-﻿using AtMonitor.Models;
+﻿using AtMonitor.ViewModels;
 using System.Collections.ObjectModel;
 
 namespace AtMonitor.Services
@@ -7,7 +7,7 @@ namespace AtMonitor.Services
     {
         Task<Page> NavigateToPage<T>(object? parameters = null) where T : Page;
 
-        Task<Page> NavigateToPeoplePicker(Collection<Person> people);
+        Task<Page> NavigateToPeoplePicker(Collection<PersonViewModel> people);
 
         Task PopAsync();
     }

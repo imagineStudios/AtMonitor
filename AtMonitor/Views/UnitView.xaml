@@ -8,7 +8,7 @@
              x:Class="AtMonitor.Views.UnitView">
     <Frame CornerRadius="4" BackgroundColor="#20808080" WidthRequest="300">
         <VerticalStackLayout>
-            
+
             <Entry Text="{Binding Name}" HorizontalOptions="Center" FontSize="Large"/>
 
             <Grid Margin="0,10,0,0">
@@ -23,7 +23,7 @@
                         HorizontalOptions="End"
                         Padding="8"/>
             </Grid>
-            
+
             <CollectionView ItemsSource="{Binding Members}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
@@ -44,6 +44,17 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+
+            <HorizontalStackLayout>
+                <Image Source="{FontImage FontFamily=FontAwesome6, Glyph={x:Static v:FaIcon.GaugeHigh}, Size=24, Color=Black}"/>
+                <Label Text="Druck" VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+            <Button ImageSource="{FontImage FontFamily=FontAwesome6, Glyph={x:Static v:FaIcon.UserPlus}, Size=12}"
+                    Command="{Binding AddReadingCommand}"
+                    MinimumHeightRequest="0"
+                    MinimumWidthRequest="0"
+                    HorizontalOptions="End"
+                    Padding="8"/>
         </VerticalStackLayout>
     </Frame>
 </ContentView>

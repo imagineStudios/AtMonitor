@@ -2,20 +2,23 @@
 
 namespace AtMonitor.ViewModels;
 
-public partial class PickerPageViewModel<T> : PageViewModel
-    where T : IEquatable<T>
+public partial class PickerPageViewModel<TModel, TViewModel> : PageViewModel
+    where TViewModel : IEquatable<TModel>
 {
-    private Collection<T>? _collection;
+    private Collection<TViewModel>? _collection;
 
     public PickerPageViewModel()
     {
         Items = [];
     }
 
-    public PickerPageViewModel(IOrderedEnumerable<T> items)
+    public PickerPageViewModel(
+        IOrderedEnumerable<TModel> items,
+        Func<TModel, TViewModel> converter)
     {
+        _converter = converter;
         Items = items
-            .Select(p => new PickerViewModel<T>(p))
+            .Select(p => new PickerViewModel<TModel>(p))
             .ToList();
 
         Items.ForEach(p => p.PickStateChanged += Item_PickStateChanged);
@@ -23,13 +26,13 @@ public partial class PickerPageViewModel<T> : PageViewModel
 
     private void Item_PickStateChanged(object? sender, EventArgs e)
     {
-        if (sender is PickerViewModel<T> picker)
+        if (sender is PickerViewModel<TModel> picker)
         {
             if (picker.IsChecked)
             {
                 if (!_collection?.Any(i => i.Equals(picker.Item)) ?? false)
                 {
-                    _collection?.Add(picker.Item);
+                    _collection?.Add(_converter(picker.Item));
                 }
             }
             else
@@ -39,19 +42,19 @@ public partial class PickerPageViewModel<T> : PageViewModel
         }
     }
 
-    public List<PickerViewModel<T>> Items { get; }
+    private readonly Func<TModel, TViewModel> _converter;
+
+    public List<PickerViewModel<TModel>> Items { get; }
 
     public override void OnNavigatingTo(object? parameter)
     {
-        if (parameter is Collection<T> collection)
+        if (parameter is Collection<TViewModel> collection)
         {
             _collection = collection;
 
-            foreach (var item in collection)
+            foreach (var item in Items)
             {
-                Items
-                    .Where(i => i.Item.Equals(item))
-                    .ForEach(i => i.IsChecked = true);
+                item.IsChecked = _collection.Any(vm => vm.Equals(item.Item));
             }
         }
     }

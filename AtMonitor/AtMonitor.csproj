@@ -69,6 +69,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\PressureReadingPage.xaml.cs">
+	    <DependentUpon>PressureReadingPage.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Views\UnitView.xaml.cs">
 	    <DependentUpon>UnitView.xaml</DependentUpon>
 	  </Compile>
@@ -82,6 +85,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\MissionPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\PressureReadingPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\PeoplePickerPage.xaml">

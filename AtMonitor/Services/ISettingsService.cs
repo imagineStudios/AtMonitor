@@ -12,5 +12,7 @@ public interface ISettingsService
 
     string ReportEmailList { get; set; }
 
-    int PressureInterval { get; set; }
+    int PressureInterval_Bar { get; set; }
+
+    int EstimatedAirConsumptionRate_BarPerMinute { get; set; }
 }
