@@ -12,7 +12,7 @@ public partial class MissionPageViewModel : ObservableObject
     private readonly INavigationService _navigationService;
     private readonly ISettingsService _settingsService;
     private readonly Mission _mission;
-    private IDispatcherTimer? secondTimer;
+    private readonly IDispatcherTimer secondTimer;
 
     public MissionPageViewModel(
         INavigationService navigationService,
@@ -33,13 +33,10 @@ public partial class MissionPageViewModel : ObservableObject
                 });
         }
 
-        secondTimer = Application.Current?.Dispatcher.CreateTimer();
-        if (secondTimer != null)
-        {
-            secondTimer.Interval = TimeSpan.FromSeconds(1);
-            secondTimer.Tick += SecondTimer_Tick;
-            secondTimer.Start();
-        }
+        secondTimer = Application.Current!.Dispatcher.CreateTimer();
+        secondTimer.Interval = TimeSpan.FromSeconds(1);
+        secondTimer.Tick += SecondTimer_Tick;
+        secondTimer.Start();
     }
 
     public ObservableCollection<UnitViewModel> Units { get; } = [];

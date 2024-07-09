@@ -9,7 +9,7 @@ public partial class PressureReadingPageViewModel : PageViewModel
     private readonly INavigationService _navigationService;
 
     [ObservableProperty]
-    private PressureReadingViewModel[]? people;
+    private PressureReadingViewModel[]? readings;
 
     public PressureReadingPageViewModel(INavigationService navigationService)
     {
@@ -20,7 +20,7 @@ public partial class PressureReadingPageViewModel : PageViewModel
     {
         if (parameter is IEnumerable<PersonViewModel> people)
         {
-            People = people.
+            Readings = people.
                 Select(p => new PressureReadingViewModel(p)).
                 ToArray();
         }
@@ -29,7 +29,7 @@ public partial class PressureReadingPageViewModel : PageViewModel
     [RelayCommand]
     private async Task OkAsync()
     {
-        People?.ForEach(p => p.AddReading());
+        Readings?.ForEach(p => p.AddReading());
         await _navigationService.PopAsync();
     }
 

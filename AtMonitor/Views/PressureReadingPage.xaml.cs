@@ -6,6 +6,7 @@ public partial class PressureReadingPage : ContentPage
 {
 	public PressureReadingPage(PressureReadingPageViewModel vm)
 	{
+		InitializeComponent();
 		BindingContext = vm;
 	}
 }

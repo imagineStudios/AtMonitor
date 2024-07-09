@@ -1,15 +1,17 @@
 ﻿using AtMonitor.Models;
 using AtMonitor.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
-using System;
 using System.Collections.ObjectModel;
 
 namespace AtMonitor.ViewModels;
 
-public class PersonViewModel : ObservableObject, IEquatable<Person>
+public partial class PersonViewModel : ObservableObject, IEquatable<Person>
 {
     private readonly ISettingsService _settingsService;
     private BottleType bottleType;
+
+    [ObservableProperty]
+    private int estimatedPressure;
 
     public PersonViewModel(Person person, ISettingsService settingsService)
     {
@@ -19,9 +21,11 @@ public class PersonViewModel : ObservableObject, IEquatable<Person>
         PressureReadings.CollectionChanged += PressureReadings_CollectionChanged;
     }
 
+    public Person Person { get; }
+
     public string Name => Person.Name;
 
-    public Person Person { get; }
+    public string Initials => $"{Person.FirstName[0]}{Person.LastName[0]}";
 
     public BottleType BottleType
     {
@@ -38,9 +42,15 @@ public class PersonViewModel : ObservableObject, IEquatable<Person>
         }
     }
 
-    public int EstimatedPressure { get; set; }
-
     public ObservableCollection<PressureReading> PressureReadings { get; } = [];
+
+    public PressureReading LatestReading => PressureReadings.Last();
+
+    public int InitialPressure => PressureReadings.First().Pressure;
+
+    public double RemainingRelativePressure => PressureReadings.Count > 0
+        ? EstimatedPressure / (double)InitialPressure
+        : 1.0;
 
     public bool Equals(Person? other)
         => Person.Equals(other);
@@ -56,14 +66,16 @@ public class PersonViewModel : ObservableObject, IEquatable<Person>
             OrderByDescending(r => r.Time).
             First();
 
-        var timeSinceLastReading = DateTime.Now - latestReading.Time;
+        var timeSinceLastReading = DateTime.Now - LatestReading.Time;
 
-        EstimatedPressure = latestReading.Pressure
+        EstimatedPressure = LatestReading.Pressure
             - (int)Math.Round(timeSinceLastReading.TotalMinutes * _settingsService.EstimatedAirConsumptionRate_BarPerMinute);
+        OnPropertyChanged(nameof(RemainingRelativePressure));
     }
 
     private void PressureReadings_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {
         Person.PressureReadings = [.. PressureReadings];
+        OnPropertyChanged(nameof(LatestReading));
     }
 }

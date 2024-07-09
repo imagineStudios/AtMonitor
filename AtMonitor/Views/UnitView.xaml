@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:m="clr-namespace:AtMonitor.Models"
              xmlns:v="clr-namespace:AtMonitor.Views"
              xmlns:vm="clr-namespace:AtMonitor.ViewModels"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="{x:Type vm:UnitViewModel}"
              x:Class="AtMonitor.Views.UnitView">
+    <ContentView.Resources>
+        <v:LessOrEqualConverter x:Key="LessOrEqualConverter"/>
+    </ContentView.Resources>
     <Frame CornerRadius="4" BackgroundColor="#20808080" WidthRequest="300">
         <VerticalStackLayout>
 
@@ -45,16 +49,60 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <HorizontalStackLayout>
-                <Image Source="{FontImage FontFamily=FontAwesome6, Glyph={x:Static v:FaIcon.GaugeHigh}, Size=24, Color=Black}"/>
-                <Label Text="Druck" VerticalOptions="Center"/>
-            </HorizontalStackLayout>
-            <Button ImageSource="{FontImage FontFamily=FontAwesome6, Glyph={x:Static v:FaIcon.UserPlus}, Size=12}"
+            <Grid Margin="0,10,0,0">
+                <HorizontalStackLayout>
+                    <Image Source="{FontImage FontFamily=FontAwesome6, Glyph={x:Static v:FaIcon.GaugeHigh}, Size=24, Color=Black}"/>
+                    <Label Text="Druck" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+                <Button ImageSource="{FontImage FontFamily=FontAwesome6, Glyph={x:Static v:FaIcon.UserPlus}, Size=12}"
                     Command="{Binding AddReadingCommand}"
                     MinimumHeightRequest="0"
                     MinimumWidthRequest="0"
                     HorizontalOptions="End"
                     Padding="8"/>
+            </Grid>
+            <CollectionView ItemsSource="{Binding Members}" ItemsLayout="HorizontalList" HorizontalOptions="Center">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="vm:PersonViewModel">
+                        <Border Background="#20000000">
+                            <VerticalStackLayout HeightRequest="140" WidthRequest="50">
+                                <Label Text="{Binding Initials}" Margin="0" HorizontalOptions="Center"/>
+                                <ProgressBar Progress="{Binding RemainingRelativePressure}" Scale="2" TranslationY="60" Rotation="270"/>
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <HorizontalStackLayout>
+                <Button
+                    Command="{Binding ChangeStateCommand}"
+                    CommandParameter="{x:Static m:UnitState.Idle}"
+                    ImageSource="{FontImage FontFamily=FontAwesome6, Glyph={x:Static v:FaIcon.Person}, Size=20}"
+                    BackgroundColor="{Binding State, Converter={StaticResource LessOrEqualConverter}, ConverterParameter={x:Static m:UnitState.Idle}}"/>
+                <Button
+                    Command="{Binding ChangeStateCommand}"
+                    CommandParameter="{x:Static m:UnitState.Entering}"
+                    ImageSource="{FontImage FontFamily=FontAwesome6, Glyph={x:Static v:FaIcon.PersonWalkingDashedLineArrowRight}, Size=20}"
+                    BackgroundColor="{Binding State, Converter={StaticResource LessOrEqualConverter}, ConverterParameter={x:Static m:UnitState.Entering}}"/>
+                <Button
+                    Command="{Binding ChangeStateCommand}"
+                    CommandParameter="{x:Static m:UnitState.Working}"
+                    ImageSource="{FontImage FontFamily=FontAwesome6, Glyph={x:Static v:FaIcon.PersonDigging}, Size=20}"
+                    BackgroundColor="{Binding State, Converter={StaticResource LessOrEqualConverter}, ConverterParameter={x:Static m:UnitState.Working}}"/>
+                <Button
+                    Command="{Binding ChangeStateCommand}"
+                    CommandParameter="{x:Static m:UnitState.Returning}"
+                    ImageSource="{FontImage FontFamily=FontAwesome6, Glyph={x:Static v:FaIcon.PersonWalkingArrowLoopLeft}, Size=20}"
+                    BackgroundColor="{Binding State, Converter={StaticResource LessOrEqualConverter}, ConverterParameter={x:Static m:UnitState.Returning}}"/>
+                <Button
+                    Command="{Binding ChangeStateCommand}"
+                    CommandParameter="{x:Static m:UnitState.Done}"
+                    ImageSource="{FontImage FontFamily=FontAwesome6, Glyph={x:Static v:FaIcon.PersonCircleCheck}, Size=20}"
+                    BackgroundColor="{Binding State, Converter={StaticResource LessOrEqualConverter}, ConverterParameter={x:Static m:UnitState.Done}}"/>
+
+            </HorizontalStackLayout>
+
         </VerticalStackLayout>
     </Frame>
 </ContentView>

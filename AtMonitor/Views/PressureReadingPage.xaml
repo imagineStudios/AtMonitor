@@ -7,22 +7,21 @@
              x:DataType="vm:PressureReadingPageViewModel"
              Title="PressureReadingPage">
     <VerticalStackLayout>
-        
-        <Label Text="Hallo"/>
 
-            <!--<CollectionView ItemsSource="{Binding People}">
+        <CollectionView ItemsSource="{Binding Readings}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="vm:PressureReadingViewModel">
                     <Frame>
                         <VerticalStackLayout>
                             <Label Text="{Binding Person.Name}"/>
-                            <Stepper Text="{Binding Pressure}"/>
+                            <Label Text="{Binding Pressure}"/>
+                            <Stepper Value="{Binding Pressure}" Minimum="0" Maximum="360" Increment="10"/>
                         </VerticalStackLayout>
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <Button Text="Übernehmen" Command="{Binding OkCommand}"/>-->
+        <Button Text="Übernehmen" Command="{Binding OkCommand}" HorizontalOptions="Center"/>
     </VerticalStackLayout>
 </ContentPage>
