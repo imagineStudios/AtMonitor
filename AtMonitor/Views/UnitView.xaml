@@ -8,101 +8,123 @@
              x:DataType="{x:Type vm:UnitViewModel}"
              x:Class="AtMonitor.Views.UnitView">
     <ContentView.Resources>
-        <v:LessOrEqualConverter x:Key="LessOrEqualConverter"/>
+        <v:GreaterOrEqualConverter x:Key="GreaterOrEqualConverter"/>
+        <v:RatioConverter x:Key="RatioConverter"/>
+        <v:EnumToDescriptionConverter x:Key="EnumToDescriptionConverter"/>
     </ContentView.Resources>
-    <Frame CornerRadius="4" BackgroundColor="#20808080" WidthRequest="300">
-        <VerticalStackLayout>
+    <Frame
+        BorderColor="Transparent"
+        CornerRadius="8"
+        BackgroundColor="{AppThemeBinding Dark={StaticResource Background_Mid}, Light=White}"
+        WidthRequest="400">
+        <Grid RowDefinitions="*,Auto,Auto">
+            <VerticalStackLayout>
+                <Entry Text="{Binding Name}" HorizontalOptions="Center" FontSize="24"/>
 
-            <Entry Text="{Binding Name}" HorizontalOptions="Center" FontSize="Large"/>
-
-            <Grid Margin="0,10,0,0">
-                <HorizontalStackLayout>
-                    <Image Source="{FontImage FontFamily=FontAwesome6, Glyph={x:Static v:FaIcon.UserGroup}, Size=24, Color=Black}"/>
-                    <Label Text="Truppmitglieder" VerticalOptions="Center"/>
-                </HorizontalStackLayout>
-                <Button ImageSource="{FontImage FontFamily=FontAwesome6, Glyph={x:Static v:FaIcon.UserPlus}, Size=12}"
+                <Grid Margin="0,10,0,0">
+                    <Label FontFamily="FontAwesome6" Text="{x:Static v:FaIcon.UserGroup}" FontSize="20" VerticalOptions="Center"/>
+                    <Label Text="Truppmitglieder" VerticalOptions="Center" FontSize="16" Margin="30,0" FontFamily="OpenSansSemibold"/>
+                    <Button
+                        Style="{StaticResource IconButton}"
+                        WidthRequest="30"
+                        HeightRequest="30"
+                        Text="{x:Static v:FaIcon.UserPlus}"
                         Command="{Binding PickPeopleCommand}"
-                        MinimumHeightRequest="0"
-                        MinimumWidthRequest="0"
                         HorizontalOptions="End"
-                        Padding="8"/>
-            </Grid>
+                        Padding="0"/>
+                </Grid>
 
-            <CollectionView ItemsSource="{Binding Members}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Border Background="#20000000">
-                            <Grid>
-                                <Label Text="{Binding Name}" Margin="0" VerticalOptions="Center"/>
+                <CollectionView ItemsSource="{Binding Members}" Margin="0,4">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="4" StrokeThickness="0">
+                            <Grid Padding="5" BackgroundColor="{StaticResource Background_Dark}">
+                                <Label FontFamily="FontAwesome6" Text="{x:Static v:FaIcon.User}" FontSize="16" VerticalOptions="Center"/>
+                                <Label Text="{Binding Name}" Margin="30,0,0,0" VerticalOptions="Center"/>
                                 <Button
-                                    Padding="8"
-                                    VerticalOptions="Start"
-                                    HorizontalOptions="End"
-                                    MinimumHeightRequest="0"
-                                    MinimumWidthRequest="0"
-                                    ImageSource="{FontImage FontFamily=FontAwesome6, Glyph={x:Static v:FaIcon.x}, Size=12}"
-                                    Command="{Binding BindingContext.RemoveMemberCommand, Source={RelativeSource AncestorType={x:Type CollectionView}}}"
-                                    CommandParameter="{Binding .}"/>
+                                        Style="{StaticResource IconButton}"
+                                        HeightRequest="20"
+                                        WidthRequest="20"
+                                        VerticalOptions="Center"
+                                        HorizontalOptions="End"
+                                        Text="{x:Static v:FaIcon.x}"
+                                        Command="{Binding BindingContext.RemoveMemberCommand, Source={RelativeSource AncestorType={x:Type CollectionView}}}"
+                                        CommandParameter="{Binding .}"/>
                             </Grid>
-                        </Border>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
 
-            <Grid Margin="0,10,0,0">
-                <HorizontalStackLayout>
-                    <Image Source="{FontImage FontFamily=FontAwesome6, Glyph={x:Static v:FaIcon.GaugeHigh}, Size=24, Color=Black}"/>
-                    <Label Text="Druck" VerticalOptions="Center"/>
-                </HorizontalStackLayout>
-                <Button ImageSource="{FontImage FontFamily=FontAwesome6, Glyph={x:Static v:FaIcon.UserPlus}, Size=12}"
-                    Command="{Binding AddReadingCommand}"
-                    MinimumHeightRequest="0"
-                    MinimumWidthRequest="0"
-                    HorizontalOptions="End"
-                    Padding="8"/>
-            </Grid>
-            <CollectionView ItemsSource="{Binding Members}" ItemsLayout="HorizontalList" HorizontalOptions="Center">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="vm:PersonViewModel">
-                        <Border Background="#20000000">
-                            <VerticalStackLayout HeightRequest="140" WidthRequest="50">
-                                <Label Text="{Binding Initials}" Margin="0" HorizontalOptions="Center"/>
-                                <ProgressBar Progress="{Binding RemainingRelativePressure}" Scale="2" TranslationY="60" Rotation="270"/>
-                            </VerticalStackLayout>
-                        </Border>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                <Grid Margin="0,10,0,0">
+                    <Label FontFamily="FontAwesome6" Text="{x:Static v:FaIcon.GaugeHigh}" FontSize="20" VerticalOptions="Center"/>
+                    <Label Text="Druck" VerticalOptions="Center" FontSize="16" Margin="30,0" FontFamily="OpenSansSemibold"/>
+                    <Button
+                        Style="{StaticResource IconButton}"
+                        WidthRequest="30"
+                        HeightRequest="30"
+                        Text="{x:Static v:FaIcon.Plus}"
+                        Command="{Binding AddReadingCommand}"
+                        HorizontalOptions="End"/>
+                </Grid>
+                <CollectionView ItemsSource="{Binding Members}" ItemsLayout="HorizontalList" HorizontalOptions="Center">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="vm:PersonViewModel">
+                            <Border Background="#20000000">
+                                <VerticalStackLayout HeightRequest="140" WidthRequest="100">
+                                    <Label Text="{Binding Initials}" Margin="0" HorizontalOptions="Center"/>
+                                    <ProgressBar Progress="{Binding RemainingRelativePressure}" ScaleY="5" TranslationY="60" Rotation="270"
+                                                 ProgressColor="{StaticResource PrimaryDark}"/>
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
 
-            <HorizontalStackLayout>
-                <Button
-                    Command="{Binding ChangeStateCommand}"
-                    CommandParameter="{x:Static m:UnitState.Idle}"
-                    ImageSource="{FontImage FontFamily=FontAwesome6, Glyph={x:Static v:FaIcon.Person}, Size=20}"
-                    BackgroundColor="{Binding State, Converter={StaticResource LessOrEqualConverter}, ConverterParameter={x:Static m:UnitState.Idle}}"/>
-                <Button
-                    Command="{Binding ChangeStateCommand}"
-                    CommandParameter="{x:Static m:UnitState.Entering}"
-                    ImageSource="{FontImage FontFamily=FontAwesome6, Glyph={x:Static v:FaIcon.PersonWalkingDashedLineArrowRight}, Size=20}"
-                    BackgroundColor="{Binding State, Converter={StaticResource LessOrEqualConverter}, ConverterParameter={x:Static m:UnitState.Entering}}"/>
-                <Button
-                    Command="{Binding ChangeStateCommand}"
-                    CommandParameter="{x:Static m:UnitState.Working}"
-                    ImageSource="{FontImage FontFamily=FontAwesome6, Glyph={x:Static v:FaIcon.PersonDigging}, Size=20}"
-                    BackgroundColor="{Binding State, Converter={StaticResource LessOrEqualConverter}, ConverterParameter={x:Static m:UnitState.Working}}"/>
-                <Button
-                    Command="{Binding ChangeStateCommand}"
-                    CommandParameter="{x:Static m:UnitState.Returning}"
-                    ImageSource="{FontImage FontFamily=FontAwesome6, Glyph={x:Static v:FaIcon.PersonWalkingArrowLoopLeft}, Size=20}"
-                    BackgroundColor="{Binding State, Converter={StaticResource LessOrEqualConverter}, ConverterParameter={x:Static m:UnitState.Returning}}"/>
-                <Button
-                    Command="{Binding ChangeStateCommand}"
-                    CommandParameter="{x:Static m:UnitState.Done}"
-                    ImageSource="{FontImage FontFamily=FontAwesome6, Glyph={x:Static v:FaIcon.PersonCircleCheck}, Size=20}"
-                    BackgroundColor="{Binding State, Converter={StaticResource LessOrEqualConverter}, ConverterParameter={x:Static m:UnitState.Done}}"/>
+            <ProgressBar Grid.Row="1"
+                         ProgressColor="{StaticResource PrimaryDark}"
+                         Background="{StaticResource Gray600}"
+                         TranslationY="1"
+                         ScaleY="2"
+                         WidthRequest="250"
+                         Progress="{Binding State, Converter={StaticResource RatioConverter}, ConverterParameter={x:Static m:UnitState.Done}}"/>
 
+            <HorizontalStackLayout Spacing="16" Grid.Row="1" HorizontalOptions="Center">
+                <v:ToggleButton
+                        Style="{StaticResource ToggleButtonStyle}"
+                        Command="{Binding ChangeStateCommand}"
+                        CommandParameter="{x:Static m:UnitState.Idle}"
+                        ImageSource="{FontImage FontFamily=FontAwesome6, Glyph={x:Static v:FaIcon.Person}, Size=26}"
+                        IsSelected="{Binding State, Converter={StaticResource GreaterOrEqualConverter}, ConverterParameter={x:Static m:UnitState.Idle}, Mode=OneWay}"/>
+                <v:ToggleButton
+                        Style="{StaticResource ToggleButtonStyle}"
+                        Command="{Binding ChangeStateCommand}"
+                        CommandParameter="{x:Static m:UnitState.Entering}"
+                        ImageSource="{FontImage FontFamily=FontAwesome6, Glyph={x:Static v:FaIcon.PersonWalkingDashedLineArrowRight}, Size=26}"
+                        IsSelected="{Binding State, Converter={StaticResource GreaterOrEqualConverter}, ConverterParameter={x:Static m:UnitState.Entering}, Mode=OneWay}"/>
+                <v:ToggleButton
+                        Style="{StaticResource ToggleButtonStyle}"
+                        Command="{Binding ChangeStateCommand}"
+                        CommandParameter="{x:Static m:UnitState.Working}"
+                        ImageSource="{FontImage FontFamily=FontAwesome6, Glyph={x:Static v:FaIcon.PersonDigging}, Size=26}"
+                        IsSelected="{Binding State, Converter={StaticResource GreaterOrEqualConverter}, ConverterParameter={x:Static m:UnitState.Working}, Mode=OneWay}"/>
+                <v:ToggleButton
+                        Style="{StaticResource ToggleButtonStyle}"
+                        Command="{Binding ChangeStateCommand}"
+                        CommandParameter="{x:Static m:UnitState.Returning}"
+                        ImageSource="{FontImage FontFamily=FontAwesome6, Glyph={x:Static v:FaIcon.PersonWalkingArrowLoopLeft}, Size=26}"
+                        IsSelected="{Binding State, Converter={StaticResource GreaterOrEqualConverter}, ConverterParameter={x:Static m:UnitState.Returning}, Mode=OneWay}"/>
+                <v:ToggleButton
+                        Style="{StaticResource ToggleButtonStyle}"
+                        Command="{Binding ChangeStateCommand}"
+                        CommandParameter="{x:Static m:UnitState.Done}"
+                        ImageSource="{FontImage FontFamily=FontAwesome6, Glyph={x:Static v:FaIcon.PersonCircleCheck}, Size=26}"
+                        IsSelected="{Binding State, Converter={StaticResource GreaterOrEqualConverter}, ConverterParameter={x:Static m:UnitState.Done}, Mode=OneWay}"/>
             </HorizontalStackLayout>
 
-        </VerticalStackLayout>
+            <Label Grid.Row="2" HorizontalOptions="Center" Margin="0,4,0,0" FontSize="16"
+                   Text="{Binding State, Converter={StaticResource EnumToDescriptionConverter}}" />
+        </Grid>
     </Frame>
 </ContentView>

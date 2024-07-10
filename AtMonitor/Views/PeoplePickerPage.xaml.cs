@@ -6,16 +6,16 @@ namespace AtMonitor.Views;
 
 public partial class PeoplePickerPage : ContentPage
 {
-	public PeoplePickerPage(IStore<Person> store, ISettingsService settingsService)
-	{
-		InitializeComponent();
+    public PeoplePickerPage(IStore<Person> store, ISettingsService settingsService)
+    {
+        InitializeComponent();
 
-		var people = store.GetAll()
-			.OrderBy(p => p.LastName)
-			.ThenBy(p => p.FirstName);
+        var people = store.GetAll()
+            .OrderBy(p => p.LastName)
+            .ThenBy(p => p.FirstName);
 
-		BindingContext = new PickerPageViewModel<Person, PersonViewModel>(
-			people,
-			p => new PersonViewModel(p, settingsService));
-	}
+        BindingContext = new PickerPageViewModel<Person, PersonViewModel>(
+            people,
+            p => new PersonViewModel(p, settingsService));
+    }
 }

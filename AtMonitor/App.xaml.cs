@@ -7,6 +7,8 @@ public partial class App : Application
     public App()
     {
         InitializeComponent();
+
+        Current!.UserAppTheme = AppTheme.Dark;
     }
 
     protected override Window CreateWindow(IActivationState? activationState)
@@ -14,7 +16,7 @@ public partial class App : Application
         var page = Handler.MauiContext?.Services.GetService<MainPage>();
         MainPage = new NavigationPage(page)
         {
-            BarBackground = Colors.IndianRed,
+            BarBackground = Color.Parse("#152C39"),
             BarTextColor = Colors.White,
         };
 

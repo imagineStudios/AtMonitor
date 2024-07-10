@@ -78,7 +78,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Resources\Styles\Icons.xaml">
+	  <MauiXaml Update="Resources\Styles\DefaultTheme.xaml">
 	    <Generator></Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\MissionFinalizationPage.xaml">

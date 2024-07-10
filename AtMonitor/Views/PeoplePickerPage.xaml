@@ -2,19 +2,27 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AtMonitor.Views.PeoplePickerPage"
-             xmlns:views="clr-namespace:AtMonitor.Views"
+             xmlns:v="clr-namespace:AtMonitor.Views"
              xmlns:vm="clr-namespace:AtMonitor.ViewModels"
              Title="PeoplePickerPage">
-    <ScrollView Orientation="Both">
-        <CollectionView ItemsSource="{Binding Items}">
-            <CollectionView.ItemsLayout>
-                <GridItemsLayout Orientation="Vertical" Span="5" />
-            </CollectionView.ItemsLayout>
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <views:PickerView/>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </ScrollView>
+    <!--<ScrollView Orientation="Both">-->
+    <FlexLayout
+        BindableLayout.ItemsSource="{Binding Items}"
+        Wrap="Wrap"
+        HorizontalOptions="FillAndExpand"
+        VerticalOptions="StartAndExpand">
+        <BindableLayout.ItemTemplate>
+            <DataTemplate x:DataType="vm:PickerViewModel`1">
+                <v:ToggleButton
+                        Style="{StaticResource ToggleButtonStyle}"
+                        WidthRequest="200"
+                        HeightRequest="200"
+                        Text="{Binding Title}"
+                        IsSelected="{Binding IsChecked}"
+                        Command="{Binding TappedCommand}"/>
+                <!--<v:PickerView/>-->
+            </DataTemplate>
+        </BindableLayout.ItemTemplate>
+    </FlexLayout>
+    <!--</ScrollView>-->
 </ContentPage>

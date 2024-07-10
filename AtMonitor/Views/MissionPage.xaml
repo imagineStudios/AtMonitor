@@ -7,9 +7,6 @@
              x:DataType="vm:MissionPageViewModel"
              NavigationPage.HasBackButton="False"
              Title="MissionPage">
-    <ContentPage.Resources>
-        
-    </ContentPage.Resources>
     <NavigationPage.TitleView>
         <Grid WidthRequest="{Binding Source={RelativeSource Self}, Path=Window.Width}">
             <HorizontalStackLayout>
@@ -18,18 +15,26 @@
                 <Label Text="{Binding Duration, StringFormat='{0:hh\\:mm\\:ss}'}" FontSize="20" VerticalOptions="Center" Margin="10"/>
             </HorizontalStackLayout>
             <Label Text="{Binding Time, StringFormat='{0:T}'}" Margin="10" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center"/>
-            <HorizontalStackLayout HorizontalOptions="End" Margin="20,0">
+            <HorizontalStackLayout HorizontalOptions="End" Margin="20,0" Spacing="10">
+                <Button
+                    Text="Trupp hinzufügen"
+                    HeightRequest="40"
+                    MinimumHeightRequest="20"
+                    Command="{Binding AddUnitCommand}"
+                    FontFamily="OpenSansSemibold"
+                    ImageSource="{FontImage FontFamily=FontAwesome6, Size=16, Glyph={x:Static v:FaIcon.UserGroup}}"/>
                 <Button
                     Text="Einsatz abschließen" 
                     HeightRequest="40"
                     MinimumHeightRequest="20"
+                    FontFamily="OpenSansSemibold"
                     Command="{Binding FinalizeMissionCommand}"
                     ImageSource="{FontImage FontFamily=FontAwesome6, Size=16, Glyph={x:Static v:FaIcon.FlagCheckered}}">
                 </Button>
             </HorizontalStackLayout>
         </Grid>
     </NavigationPage.TitleView>
-    <HorizontalStackLayout HorizontalOptions="Center">
+    <HorizontalStackLayout HorizontalOptions="Center" Padding="0,16">
         <CollectionView ItemsSource="{Binding Units}">
             <CollectionView.ItemsLayout>
                 <LinearItemsLayout Orientation="Horizontal" ItemSpacing="8"/>
@@ -40,6 +45,6 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <Button Text="Trupp hinzufügen" Command="{Binding AddUnitCommand}" HeightRequest="100"/>
+        
     </HorizontalStackLayout>
 </ContentPage>
