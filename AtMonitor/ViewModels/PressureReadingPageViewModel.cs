@@ -11,17 +11,22 @@ public partial class PressureReadingPageViewModel : PageViewModel
     [ObservableProperty]
     private PressureReadingViewModel[]? readings;
 
-    public PressureReadingPageViewModel(INavigationService navigationService)
+    public PressureReadingPageViewModel(
+        INavigationService navigationService,
+        ISettingsService settingsService)
     {
         _navigationService = navigationService;
+        PressureInterval = settingsService.PressureInterval_Bar;
     }
+
+    public int PressureInterval { get; }
 
     public override void OnNavigatingTo(object? parameter)
     {
         if (parameter is IEnumerable<PersonViewModel> people)
         {
             Readings = people.
-                Select(p => new PressureReadingViewModel(p)).
+                Select(p => new PressureReadingViewModel(p, PressureInterval)).
                 ToArray();
         }
     }

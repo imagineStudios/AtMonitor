@@ -8,10 +8,10 @@ public partial class PressureReadingViewModel : ObservableObject
     [ObservableProperty]
     private int pressure;
 
-    public PressureReadingViewModel(PersonViewModel personViewModel)
+    public PressureReadingViewModel(PersonViewModel personViewModel, int precission)
     {
         Person = personViewModel;
-        Pressure = Person.EstimatedPressure;
+        Pressure = Person.EstimatedPressure.RoundTo(precission);
     }
 
     public PersonViewModel Person { get; }

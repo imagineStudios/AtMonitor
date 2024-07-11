@@ -38,6 +38,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<IStore<Person>>(new ConstStore<Person>(Mock.People));
         builder.Services.AddSingleton<ISettingsService, SettingsService>();
         builder.Services.AddSingleton<INavigationService, NavigationService>();
+        builder.Services.AddSingleton<IAlertService, AlertService>();
         return builder;
     }
 

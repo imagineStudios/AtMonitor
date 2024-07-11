@@ -77,5 +77,6 @@ public partial class PersonViewModel : ObservableObject, IEquatable<Person>
     {
         Person.PressureReadings = [.. PressureReadings];
         OnPropertyChanged(nameof(LatestReading));
+        UpdatePressureEstimate();
     }
 }

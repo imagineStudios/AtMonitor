@@ -25,6 +25,7 @@
                     <Label FontFamily="FontAwesome6" Text="{x:Static v:FaIcon.UserGroup}" FontSize="20" VerticalOptions="Center"/>
                     <Label Text="Truppmitglieder" VerticalOptions="Center" FontSize="16" Margin="30,0" FontFamily="OpenSansSemibold"/>
                     <Button
+                        IsVisible="{Binding CanPeopleBeAdded}"
                         Style="{StaticResource IconButton}"
                         WidthRequest="30"
                         HeightRequest="30"
@@ -42,14 +43,15 @@
                                 <Label FontFamily="FontAwesome6" Text="{x:Static v:FaIcon.User}" FontSize="16" VerticalOptions="Center"/>
                                 <Label Text="{Binding Name}" Margin="30,0,0,0" VerticalOptions="Center"/>
                                 <Button
-                                        Style="{StaticResource IconButton}"
-                                        HeightRequest="20"
-                                        WidthRequest="20"
-                                        VerticalOptions="Center"
-                                        HorizontalOptions="End"
-                                        Text="{x:Static v:FaIcon.x}"
-                                        Command="{Binding BindingContext.RemoveMemberCommand, Source={RelativeSource AncestorType={x:Type CollectionView}}}"
-                                        CommandParameter="{Binding .}"/>
+                                    Style="{StaticResource IconButton}"
+                                    IsVisible="{Binding BindingContext.CanPeopleBeAdded, Source={RelativeSource AncestorType={x:Type CollectionView}}}"
+                                    HeightRequest="20"
+                                    WidthRequest="20"
+                                    VerticalOptions="Center"
+                                    HorizontalOptions="End"
+                                    Text="{x:Static v:FaIcon.x}"
+                                    Command="{Binding BindingContext.RemoveMemberCommand, Source={RelativeSource AncestorType={x:Type CollectionView}}}"
+                                    CommandParameter="{Binding .}"/>
                             </Grid>
                             </Border>
                         </DataTemplate>

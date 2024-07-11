@@ -11,17 +11,23 @@ public partial class UnitViewModel : ObservableObject
 {
     private readonly INavigationService _navigationService;
     private readonly ISettingsService _settingsService;
+    private readonly IAlertService _alertService;
     private IDispatcherTimer updateTimer;
 
     [ObservableProperty]
     private UnitState state;
 
+    [ObservableProperty]
+    private bool canPeopleBeAdded;
+
     public UnitViewModel(
         INavigationService navigationService,
-        ISettingsService settingsService)
+        ISettingsService settingsService,
+        IAlertService alertService)
     {
         _navigationService = navigationService;
         _settingsService = settingsService;
+        _alertService = alertService;
         Unit = new Unit();
         Members.CollectionChanged += Members_CollectionChanged;
 
@@ -32,6 +38,8 @@ public partial class UnitViewModel : ObservableObject
             updateTimer.Tick += UpdateTimer_Tick;
             updateTimer.Stop();
         }
+
+        OnStateChanged(State);
     }
 
     private void UpdateTimer_Tick(object? sender, EventArgs e)
@@ -86,13 +94,53 @@ public partial class UnitViewModel : ObservableObject
         => await _navigationService.NavigateToPage<PressureReadingPage>(Members);
 
     [RelayCommand]
-    private void ChangeState(object parameter)
+    private async Task ChangeState(object parameter)
     {
+        var newState = (UnitState)parameter;
+
+        if (newState == State)
+        {
+            return;
+        }
+        else if (newState > State + 1)
+        {
+            var ok = await _alertService.ShowConfirmationAsync(
+                "Warnung",
+                $"Möchten Sie wirklich einen Zustand überspringen?",
+                "Ja",
+                "Nein");
+
+            if (!ok)
+            {
+                return;
+            }
+        }
+        else if (newState < State)
+        {
+            var ok = await _alertService.ShowConfirmationAsync(
+                "Warnung",
+                $"Der Trupp befindet sich derzeit im Zustand \"{State.Description()}\".\nMöchten Sie den Zustand wirklich zu \"{newState.Description()}\" ändern?",
+                "Ja",
+                "Nein");
+
+            if (!ok)
+            {
+                return;
+            }
+        }
+
         State = (UnitState)parameter;
+
+        if (State > UnitState.Idle && Members.Sum(m => m.PressureReadings.Count) == 0
+            || await _alertService.ShowConfirmationAsync("Druck erfassen?", "", "Ja", "Nein"))
+        {
+            await AddReading();
+        }
     }
 
     partial void OnStateChanged(UnitState value)
     {
+        CanPeopleBeAdded = State == UnitState.Idle;
         if (State > UnitState.Idle && State < UnitState.Done)
         {
             updateTimer.Start();

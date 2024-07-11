@@ -7,6 +7,12 @@
              x:DataType="vm:MissionPageViewModel"
              NavigationPage.HasBackButton="False"
              Title="MissionPage">
+    <ContentPage.Resources>
+        <FontImage x:Key="DarkGroup" Glyph="{x:Static v:FaIcon.UserGroup}" Size="16" FontFamily="FontAwesome6" Color="{StaticResource PrimaryDarkText}"/>
+        <FontImage x:Key="LightGroup" Glyph="{x:Static v:FaIcon.UserGroup}" Size="16" FontFamily="FontAwesome6" Color="White"/>
+        <FontImage x:Key="DarkFlag" Glyph="{x:Static v:FaIcon.FlagCheckered}" Size="16" FontFamily="FontAwesome6" Color="{StaticResource PrimaryDarkText}"/>
+        <FontImage x:Key="LightFlag" Glyph="{x:Static v:FaIcon.FlagCheckered}" Size="16" FontFamily="FontAwesome6" Color="White"/>
+    </ContentPage.Resources>
     <NavigationPage.TitleView>
         <Grid WidthRequest="{Binding Source={RelativeSource Self}, Path=Window.Width}">
             <HorizontalStackLayout>
@@ -22,15 +28,14 @@
                     MinimumHeightRequest="20"
                     Command="{Binding AddUnitCommand}"
                     FontFamily="OpenSansSemibold"
-                    ImageSource="{FontImage FontFamily=FontAwesome6, Size=16, Glyph={x:Static v:FaIcon.UserGroup}}"/>
+                    ImageSource="{AppThemeBinding Light={StaticResource LightGroup}, Dark={StaticResource DarkGroup}}"/>
                 <Button
                     Text="Einsatz abschließen" 
                     HeightRequest="40"
                     MinimumHeightRequest="20"
                     FontFamily="OpenSansSemibold"
                     Command="{Binding FinalizeMissionCommand}"
-                    ImageSource="{FontImage FontFamily=FontAwesome6, Size=16, Glyph={x:Static v:FaIcon.FlagCheckered}}">
-                </Button>
+                    ImageSource="{AppThemeBinding Light={StaticResource LightFlag}, Dark={StaticResource DarkFlag}}"/>
             </HorizontalStackLayout>
         </Grid>
     </NavigationPage.TitleView>

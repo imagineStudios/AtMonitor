@@ -11,26 +11,25 @@ public partial class MissionPageViewModel : ObservableObject
 {
     private readonly INavigationService _navigationService;
     private readonly ISettingsService _settingsService;
+    private readonly IAlertService _alertService;
     private readonly Mission _mission;
     private readonly IDispatcherTimer secondTimer;
 
     public MissionPageViewModel(
         INavigationService navigationService,
-        ISettingsService settingsService)
+        ISettingsService settingsService,
+        IAlertService alertService)
     {
         _navigationService = navigationService;
         _settingsService = settingsService;
+        _alertService = alertService;
         _mission = new Mission(DateTime.Now);
 
         Units.CollectionChanged += Units_CollectionChanged;
 
         for (int i = 0; i < 3; i++)
         {
-            Units.Add(
-                new UnitViewModel(_navigationService, settingsService)
-                {
-                    Name = GetNextUnitName(),
-                });
+            AddUnit();
         }
 
         secondTimer = Application.Current!.Dispatcher.CreateTimer();
@@ -65,7 +64,35 @@ public partial class MissionPageViewModel : ObservableObject
 
     public TimeSpan Duration => Time - Begin;
 
-    public string GetNextUnitName()
+    [RelayCommand]
+    private void AddUnit()
+    {
+        Units.Add(new UnitViewModel(
+            _navigationService,
+            _settingsService,
+            _alertService)
+            {
+                Name = GetNextUnitName(),
+            });
+    }
+
+    [RelayCommand]
+    private async Task FinalizeMissionAsync()
+       => await _navigationService.NavigateToPage<MissionFinalizationPage>(this);
+
+
+    private void Units_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+        _mission.Units = [.. Units.Select(u => u.Unit)];
+    }
+
+    private void SecondTimer_Tick(object? sender, EventArgs e)
+    {
+        OnPropertyChanged(nameof(Time));
+        OnPropertyChanged(nameof(Duration));
+    }
+
+    private string GetNextUnitName()
     {
         var index = Units.Count;
         switch (_settingsService.DefaultUnitNaming)
@@ -93,24 +120,5 @@ public partial class MissionPageViewModel : ObservableObject
             default:
                 return string.Empty;
         }
-    }
-
-    [RelayCommand]
-    private async Task AddUnitAsync()
-        => await _navigationService.NavigateToPage<UnitRegistrationPage>(this);
-
-    [RelayCommand]
-    private async Task FinalizeMissionAsync()
-       => await _navigationService.NavigateToPage<MissionFinalizationPage>(this);
-
-    private void Units_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-    {
-        _mission.Units = [.. Units.Select(u => u.Unit)];
-    }
-
-    private void SecondTimer_Tick(object? sender, EventArgs e)
-    {
-        OnPropertyChanged(nameof(Time));
-        OnPropertyChanged(nameof(Duration));
     }
 }

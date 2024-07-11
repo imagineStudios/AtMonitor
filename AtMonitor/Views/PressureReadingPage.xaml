@@ -6,22 +6,25 @@
              xmlns:vm="clr-namespace:AtMonitor.ViewModels"
              x:DataType="vm:PressureReadingPageViewModel"
              Title="PressureReadingPage">
-    <VerticalStackLayout>
-
-        <CollectionView ItemsSource="{Binding Readings}">
+    <VerticalStackLayout VerticalOptions="Center">
+        <CollectionView ItemsSource="{Binding Readings}" ItemsLayout="HorizontalList" HorizontalOptions="Center">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="vm:PressureReadingViewModel">
-                    <Frame>
+                    <Frame BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource Background_Mid}}">
                         <VerticalStackLayout>
-                            <Label Text="{Binding Person.Name}"/>
-                            <Label Text="{Binding Pressure}"/>
-                            <Stepper Value="{Binding Pressure}" Minimum="0" Maximum="360" Increment="10"/>
+                            <Label Text="{Binding Person.Name}" HorizontalOptions="Center" FontFamily="OpenSansSemibold" FontSize="20"/>
+                            <Entry Text="{Binding Pressure}" HorizontalOptions="Center" Margin="20" FontSize="40" Keyboard="Numeric"/>
+                            <Stepper Value="{Binding Pressure}"
+                                     Minimum="0"
+                                     Maximum="360"
+                                     Increment="10"
+                                     Scale="1.5"
+                                     Background="{StaticResource Primary}" HorizontalOptions="Center"/>
                         </VerticalStackLayout>
                     </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
-        <Button Text="Übernehmen" Command="{Binding OkCommand}" HorizontalOptions="Center"/>
+        <Button Text="Übernehmen" Command="{Binding OkCommand}" HorizontalOptions="Center" Margin="20"/>
     </VerticalStackLayout>
 </ContentPage>

@@ -1,4 +1,7 @@
-﻿namespace AtMonitor;
+﻿using AtMonitor.Views;
+using System.Globalization;
+
+namespace AtMonitor;
 
 public static class Extensions
 {
@@ -23,4 +26,14 @@ public static class Extensions
         var attributes = memInfo[0].GetCustomAttributes(typeof(T), false);
         return (attributes.Length > 0) ? (T)attributes[0] : null;
     }
+
+    public static string? Description(this Enum enumVal)
+       => (string?)new EnumToDescriptionConverter().Convert(
+           enumVal,
+           typeof(string),
+           null,
+           CultureInfo.InvariantCulture);
+
+    public static int RoundTo(this int value, int Precission)
+        => Precission * (int)Math.Round((double)value / Precission);
 }
