@@ -5,6 +5,7 @@
              xmlns:v="clr-namespace:AtMonitor.Views"
              xmlns:vm="clr-namespace:AtMonitor.ViewModels"
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:microcharts="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
              x:DataType="{x:Type vm:UnitViewModel}"
              x:Class="AtMonitor.Views.UnitView">
     <ContentView.Resources>
@@ -39,10 +40,10 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <Border Margin="4" StrokeThickness="0">
-                            <Grid Padding="5" BackgroundColor="{StaticResource Background_Dark}">
-                                <Label FontFamily="FontAwesome6" Text="{x:Static v:FaIcon.User}" FontSize="16" VerticalOptions="Center"/>
-                                <Label Text="{Binding Name}" Margin="30,0,0,0" VerticalOptions="Center"/>
-                                <Button
+                                <Grid Padding="5" BackgroundColor="{StaticResource Background_Dark}">
+                                    <Label FontFamily="FontAwesome6" Text="{x:Static v:FaIcon.User}" FontSize="16" VerticalOptions="Center"/>
+                                    <Label Text="{Binding Name}" Margin="30,0,0,0" VerticalOptions="Center"/>
+                                    <Button
                                     Style="{StaticResource IconButton}"
                                     IsVisible="{Binding BindingContext.CanPeopleBeAdded, Source={RelativeSource AncestorType={x:Type CollectionView}}}"
                                     HeightRequest="20"
@@ -52,7 +53,7 @@
                                     Text="{x:Static v:FaIcon.x}"
                                     Command="{Binding BindingContext.RemoveMemberCommand, Source={RelativeSource AncestorType={x:Type CollectionView}}}"
                                     CommandParameter="{Binding .}"/>
-                            </Grid>
+                                </Grid>
                             </Border>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
@@ -69,19 +70,24 @@
                         Command="{Binding AddReadingCommand}"
                         HorizontalOptions="End"/>
                 </Grid>
+
                 <CollectionView ItemsSource="{Binding Members}" ItemsLayout="HorizontalList" HorizontalOptions="Center">
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="vm:PersonViewModel">
                             <Border Background="#20000000">
                                 <VerticalStackLayout HeightRequest="140" WidthRequest="100">
                                     <Label Text="{Binding Initials}" Margin="0" HorizontalOptions="Center"/>
-                                    <ProgressBar Progress="{Binding RemainingRelativePressure}" ScaleY="5" TranslationY="60" Rotation="270"
-                                                 ProgressColor="{StaticResource PrimaryDark}"/>
+                                    <v:PressureGraph ForegroundColor="Yellow" WidthRequest="50" Pressure="{Binding RemainingRelativePressure}" MaxValue="1"/>
                                 </VerticalStackLayout>
                             </Border>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
+                <Label Text="Kontrolle in"/>
+                <Label Text="{Binding TimeToNextReading, StringFormat='{0:mm\\:ss}'}"/>
+                <Label Text="Umkehren bei"/>
+                <Label Text="{Binding ReturnPressure}"/>
+
             </VerticalStackLayout>
 
             <ProgressBar Grid.Row="1"

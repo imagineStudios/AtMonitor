@@ -1,13 +1,12 @@
 ﻿using AtMonitor.Models;
 using AtMonitor.Services;
 using AtMonitor.Views;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
 
 namespace AtMonitor.ViewModels;
 
-public partial class MissionPageViewModel : ObservableObject
+public partial class MissionPageViewModel : PageViewModel
 {
     private readonly INavigationService _navigationService;
     private readonly ISettingsService _settingsService;

@@ -13,6 +13,12 @@ public partial class PersonViewModel : ObservableObject, IEquatable<Person>
     [ObservableProperty]
     private int estimatedPressure;
 
+    [ObservableProperty]
+    private PressureReading? latestReading;
+
+    [ObservableProperty]
+    private PressureReading? startedWorkingReading;
+
     public PersonViewModel(Person person, ISettingsService settingsService)
     {
         Person = person;
@@ -22,6 +28,8 @@ public partial class PersonViewModel : ObservableObject, IEquatable<Person>
     }
 
     public Person Person { get; }
+
+    public UnitState State { get; set; }
 
     public string Name => Person.Name;
 
@@ -44,31 +52,31 @@ public partial class PersonViewModel : ObservableObject, IEquatable<Person>
 
     public ObservableCollection<PressureReading> PressureReadings { get; } = [];
 
-    public PressureReading LatestReading => PressureReadings.Last();
-
-    public int InitialPressure => PressureReadings.First().Pressure;
+    public int InitialPressure
+        => PressureReadings.Count > 0
+        ? PressureReadings.First().Pressure
+        : 0;
 
     public double RemainingRelativePressure => PressureReadings.Count > 0
         ? EstimatedPressure / (double)InitialPressure
         : 1.0;
+
+    public int ReturnPressure
+        => 2 * (InitialPressure - StartedWorkingReading?.Pressure ?? 0);
 
     public bool Equals(Person? other)
         => Person.Equals(other);
 
     public void UpdatePressureEstimate()
     {
-        if (PressureReadings.Count == 0)
+        if (LatestReading == null)
         {
             return;
         }
 
-        var latestReading = PressureReadings.
-            OrderByDescending(r => r.Time).
-            First();
+        var timeSinceLastReading = DateTime.Now - LatestReading!.Time;
 
-        var timeSinceLastReading = DateTime.Now - LatestReading.Time;
-
-        EstimatedPressure = LatestReading.Pressure
+        EstimatedPressure = LatestReading!.Pressure
             - (int)Math.Round(timeSinceLastReading.TotalMinutes * _settingsService.EstimatedAirConsumptionRate_BarPerMinute);
         OnPropertyChanged(nameof(RemainingRelativePressure));
     }
@@ -76,7 +84,12 @@ public partial class PersonViewModel : ObservableObject, IEquatable<Person>
     private void PressureReadings_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
     {
         Person.PressureReadings = [.. PressureReadings];
-        OnPropertyChanged(nameof(LatestReading));
+        LatestReading = PressureReadings.Last();
+        if (StartedWorkingReading == null && State == UnitState.Working)
+        {
+            StartedWorkingReading = LatestReading;
+        }
+        OnPropertyChanged(nameof(ReturnPressure));
         UpdatePressureEstimate();
     }
 }

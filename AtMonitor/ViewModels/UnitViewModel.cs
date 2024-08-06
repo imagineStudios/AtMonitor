@@ -32,19 +32,11 @@ public partial class UnitViewModel : ObservableObject
         Members.CollectionChanged += Members_CollectionChanged;
 
         updateTimer = Application.Current!.Dispatcher.CreateTimer();
-        if (updateTimer != null)
-        {
-            updateTimer.Interval = TimeSpan.FromSeconds(10);
-            updateTimer.Tick += UpdateTimer_Tick;
-            updateTimer.Stop();
-        }
+        updateTimer.Interval = TimeSpan.FromSeconds(1);
+        updateTimer.Tick += UpdateTimer_Tick;
+        updateTimer.Stop();
 
         OnStateChanged(State);
-    }
-
-    private void UpdateTimer_Tick(object? sender, EventArgs e)
-    {
-        Members.ForEach(m => m.UpdatePressureEstimate());
     }
 
     public Unit Unit { get; }
@@ -79,6 +71,25 @@ public partial class UnitViewModel : ObservableObject
 
     public bool CanBeChanged { get; set; } = true;
 
+    public int ReturnPressure => Members.Count > 0
+        ? Members.Max(m => m.ReturnPressure) : 0;
+
+    public TimeSpan TimeToNextReading
+    {
+        get
+        {
+            if (Members.Count == 0) return TimeSpan.FromMinutes(10);
+
+            var lastReadingTime = Members
+                .Select(m => m.LatestReading?.Time ?? default)
+                .Max();
+
+            return lastReadingTime != default
+                ? lastReadingTime + TimeSpan.FromMinutes(10) - DateTime.Now
+                : TimeSpan.FromMinutes(10);
+        }
+    }
+
     public ObservableCollection<PersonViewModel> Members { get; } = [];
 
     [RelayCommand]
@@ -104,38 +115,36 @@ public partial class UnitViewModel : ObservableObject
         }
         else if (newState > State + 1)
         {
-            var ok = await _alertService.ShowConfirmationAsync(
+            if (!await _alertService.ShowConfirmationAsync(
                 "Warnung",
                 $"Möchten Sie wirklich einen Zustand überspringen?",
                 "Ja",
-                "Nein");
-
-            if (!ok)
+                "Nein"))
             {
                 return;
             }
         }
         else if (newState < State)
         {
-            var ok = await _alertService.ShowConfirmationAsync(
+            if (!await _alertService.ShowConfirmationAsync(
                 "Warnung",
                 $"Der Trupp befindet sich derzeit im Zustand \"{State.Description()}\".\nMöchten Sie den Zustand wirklich zu \"{newState.Description()}\" ändern?",
                 "Ja",
-                "Nein");
-
-            if (!ok)
+                "Nein"))
             {
                 return;
             }
         }
 
-        State = (UnitState)parameter;
-
-        if (State > UnitState.Idle && Members.Sum(m => m.PressureReadings.Count) == 0
+        if (newState > UnitState.Idle && Members.Sum(m => m.PressureReadings.Count) == 0
+            || newState == UnitState.Working
             || await _alertService.ShowConfirmationAsync("Druck erfassen?", "", "Ja", "Nein"))
         {
             await AddReading();
         }
+
+        State = newState;
+        Members.ForEach(m => m.State = State);
     }
 
     partial void OnStateChanged(UnitState value)
@@ -149,6 +158,13 @@ public partial class UnitViewModel : ObservableObject
         {
             updateTimer.Stop();
         }
+    }
+
+    private void UpdateTimer_Tick(object? sender, EventArgs e)
+    {
+        Members.ForEach(m => m.UpdatePressureEstimate());
+        OnPropertyChanged(nameof(TimeToNextReading));
+        OnPropertyChanged(nameof(ReturnPressure));
     }
 
     private void Members_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

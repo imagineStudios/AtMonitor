@@ -3,6 +3,7 @@ using AtMonitor.Services;
 using AtMonitor.ViewModels;
 using AtMonitor.Views;
 using Microsoft.Extensions.Logging;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 
 namespace AtMonitor;
 
@@ -17,7 +18,8 @@ public static class MauiProgram
             .ConfigureFonts(RegisterFonts)
             .RegisterServices()
             .RegisterViews()
-            .RegisterViewModels();
+            .RegisterViewModels()
+            .UseSkiaSharp();
 
 #if DEBUG
         builder.Logging.AddDebug();

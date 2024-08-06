@@ -3,20 +3,41 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:AtMonitor.Views"
              xmlns:vm="clr-namespace:AtMonitor.ViewModels"
+             xmlns:v="clr-namespace:AtMonitor.Views"
              x:DataType="vm:MainPageViewModel"
              x:Class="AtMonitor.Views.MainPage">
 
-    <VerticalStackLayout Spacing="10">
-        <Button Text="Neuer Einsatz"
-                HorizontalOptions="Center"
-                HeightRequest="200"
-                WidthRequest="300"
-                Command="{Binding NewMissionCommand}"/>
+    <ContentPage.Resources>
+        <FontImage x:Key="DarkFire" Glyph="{x:Static v:FaIcon.HouseFire}" Size="32" FontFamily="FontAwesome6" Color="{StaticResource PrimaryDarkText}"/>
+        <FontImage x:Key="LightFire" Glyph="{x:Static v:FaIcon.HouseFire}" Size="32" FontFamily="FontAwesome6" Color="White"/>
+        <FontImage x:Key="DarkFile" Glyph="{x:Static v:FaIcon.FileLines}" Size="32" FontFamily="FontAwesome6" Color="{StaticResource PrimaryDarkText}"/>
+        <FontImage x:Key="LightFile" Glyph="{x:Static v:FaIcon.FileLines}" Size="32" FontFamily="FontAwesome6" Color="White"/>
+        <FontImage x:Key="DarkSettings" Glyph="{x:Static v:FaIcon.Gear}" Size="32" FontFamily="FontAwesome6" Color="{StaticResource PrimaryDarkText}"/>
+        <FontImage x:Key="LightSettings" Glyph="{x:Static v:FaIcon.Gear}" Size="32" FontFamily="FontAwesome6" Color="White"/>
+    </ContentPage.Resources>
+
+    <HorizontalStackLayout Spacing="50" HorizontalOptions="Center">
         <Button Text="Berichte"
-                HorizontalOptions="Center"
+                CornerRadius="50"
+                VerticalOptions="Center"
                 HeightRequest="100"
                 WidthRequest="300" 
-                Command="{Binding ReportsCommand}"/>
-    </VerticalStackLayout>
+                Command="{Binding ReportsCommand}"
+                ImageSource="{AppThemeBinding Light={StaticResource LightFile}, Dark={StaticResource DarkFile}}"/>
+        <Button Text="Neuer Einsatz"
+                CornerRadius="50"
+                VerticalOptions="Center"
+                HeightRequest="200"
+                WidthRequest="300"
+                Command="{Binding NewMissionCommand}"
+                ImageSource="{AppThemeBinding Light={StaticResource LightFire}, Dark={StaticResource DarkFire}}"/>
+        <Button Text="Einstellungen"
+                CornerRadius="50"
+                VerticalOptions="Center"
+                HeightRequest="100"
+                WidthRequest="300" 
+                Command="{Binding ReportsCommand}"
+                ImageSource="{AppThemeBinding Light={StaticResource LightSettings}, Dark={StaticResource DarkSettings}}"/>
+    </HorizontalStackLayout>
 
 </ContentPage>
